@@ -13,4 +13,18 @@ public class Main {
 
         }
     }
+
+    private static void printMainMenu() {
+
+    }
+    // Add student
+    // Delete student
+    // Print students
+    // Add course
+    // Print courses
+    // Add student to course
+    // Ajouter une note a un etudiant
+    // Print Students in a course
+    // S'inscrire a donner un cour
+    // Custom sql query ???
 }
