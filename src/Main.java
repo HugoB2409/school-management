@@ -1,3 +1,5 @@
+import Models.Builder;
+
 import java.sql.*;
 import java.util.Scanner;
 
@@ -11,7 +13,6 @@ public class Main {
 //
 //        while (rs.next()) {
 //            System.out.println(rs.getInt(1));
-//
 //        }
         getUserInput();
     }
@@ -33,10 +34,10 @@ public class Main {
 
     private static void executeOption(int option) {
         switch (option) {
-//            case 1 -> // Add Student
-//            case 2 -> // Modify Student
+            case 1 -> System.out.println(new Builder().buildStudent().toString());
+//            case 2 -> // Supprimer Student
 //            case 3 -> // Print Students
-//            case 4 -> // Add Course
+            case 4 -> System.out.println(new Builder().buildCourse().toString());
 //            case 5 -> // Print Courses
 //            case 6 -> // Signup student to class
 //            case 7 -> // Add grade to student
@@ -50,7 +51,7 @@ public class Main {
     private static void printMainMenu() {
         System.out.println("Menu Principal");
         System.out.println("1. Ajouter un étudiant");
-        System.out.println("2. Modifier un étudiant");
+        System.out.println("2. Supprimer un étudiant");
         System.out.println("3. Afficher les étudiants");
         System.out.println("4. Ajouter un cours");
         System.out.println("5. Afficher les cours");
@@ -64,7 +65,7 @@ public class Main {
     }
 
     private static void printInvalidMessage() {
-        System.err.println("Erreur: Veuillez entrer un option valide");
+        System.out.println("ERREUR: Veuillez entrer un option valide");
     }
 
     private static void printGoodbyeMessage() {

@@ -7,8 +7,8 @@ public class Course {
     private final int credit;
     private final double passingGrade;
 
-    public Course(int id, String name, String code, int credit, double passingGrade) {
-        this.id = id;
+    public Course(Integer id, String name, String code, int credit, double passingGrade) {
+        this.id = (id == null) ? -1 : id;
         this.name = name;
         this.code = code;
         this.credit = credit;
@@ -33,5 +33,13 @@ public class Course {
 
     public double getPassingGrade() {
         return passingGrade;
+    }
+
+    public String toString() {
+        return name + " " + code + " " + credit + " " + passingGrade;
+    }
+
+    public void saveToDatabase() {
+        // save to database
     }
 }

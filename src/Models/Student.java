@@ -7,8 +7,8 @@ public class Student {
     private final String lastName;
     private final String birthDay;
 
-    public Student(int id, String studentId, String firstName, String lastName, String birthDay) {
-        this.id = id;
+    public Student(Integer id, String studentId, String firstName, String lastName, String birthDay) {
+        this.id = (id == null) ? -1 : id;
         this.studentId = studentId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -33,5 +33,14 @@ public class Student {
 
     public String getBirthDay() {
         return birthDay;
+    }
+
+    @Override
+    public String toString() {
+        return  studentId + " " + firstName + " " + lastName + " " + birthDay;
+    }
+
+    public void saveToDatabase() {
+        // save to database
     }
 }
