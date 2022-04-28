@@ -35,15 +35,21 @@ public class StudentCourseBroker {
 
     public List<Student> getStudentsInCourse(String courseCode) {
         List<Student> students = new ArrayList<>();
-        // get course by code
+        Course course = new CourseBroker(connection).getCourseByCode(courseCode);
         String query = "SELECT * FROM Student s JOIN StudentCourse sc ON s.id = sc.studentId WHERE sc.courseId = ?";
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setInt(1, 1);
+            preparedStatement.setInt(1, course.getId());
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                Student student = new Student(resultSet.getInt("id"), resultSet.getString("studentId"), resultSet.getString("firstName"), resultSet.getString("lastName"), resultSet.getString("birthDay"));
+                Student student = new Student(
+                        resultSet.getInt("id"),
+                        resultSet.getString("studentId"),
+                        resultSet.getString("firstName"),
+                        resultSet.getString("lastName"),
+                        resultSet.getString("birthDay")
+                );
                 students.add(student);
             }
             resultSet.close();
@@ -63,7 +69,13 @@ public class StudentCourseBroker {
             preparedStatement.setInt(1, 1);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                Course course = new Course(resultSet.getInt("id"), resultSet.getString("name"), resultSet.getString("code"), resultSet.getInt("credit"), resultSet.getDouble("passingGrade"));
+                Course course = new Course(
+                        resultSet.getInt("id"),
+                        resultSet.getString("name"),
+                        resultSet.getString("code"),
+                        resultSet.getInt("credit"),
+                        resultSet.getDouble("passingGrade")
+                );
                 courses.add(course);
             }
             resultSet.close();
