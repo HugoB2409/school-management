@@ -1,8 +1,8 @@
 package Models;
 
 public class TeacherCourse {
-    private int teacherId;
-    private int courseId;
+    private final int teacherId;
+    private final int courseId;
 
     public TeacherCourse(int teacherId, int courseId) {
         this.teacherId = teacherId;
