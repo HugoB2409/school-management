@@ -1,5 +1,10 @@
 package Models;
 
+import Brokers.StudentBroker;
+
+import java.sql.Connection;
+import java.sql.Date;
+
 public class Student {
     private final int id;
     private final String studentId;
@@ -31,8 +36,8 @@ public class Student {
         return lastName;
     }
 
-    public String getBirthDay() {
-        return birthDay;
+    public Date getBirthDay() {
+        return Date.valueOf(birthDay);
     }
 
     @Override
@@ -40,7 +45,7 @@ public class Student {
         return  studentId + " " + firstName + " " + lastName + " " + birthDay;
     }
 
-    public void saveToDatabase() {
-        // save to database
+    public void saveToDatabase(Connection connection) {
+        new StudentBroker(connection).add(this);
     }
 }

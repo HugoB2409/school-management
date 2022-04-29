@@ -1,5 +1,9 @@
 package Models;
 
+import Brokers.CourseBroker;
+
+import java.sql.Connection;
+
 public class Course {
     private final int id;
     private final String name;
@@ -39,7 +43,7 @@ public class Course {
         return name + " " + code + " " + credit + " " + passingGrade;
     }
 
-    public void saveToDatabase() {
-        // save to database
+    public void saveToDatabase(Connection connection) {
+        new CourseBroker(connection).add(this);
     }
 }

@@ -1,12 +1,19 @@
+import Brokers.CourseBroker;
+import Brokers.StudentBroker;
 import Models.Builder;
+import Models.Course;
+import Models.Student;
 
 import java.sql.*;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
+
+    private static Connection connection;
     public static void main(String[] args) throws SQLException {
-//        Database database = new Database();
-//        Connection connection = database.getConnection();
+        Database database = new Database();
+        connection = database.getConnection();
 //        Statement stmt = connection.createStatement();
 //        ResultSet rs = stmt.executeQuery("SELECT * FROM STUDENT");
 //
@@ -34,11 +41,11 @@ public class Main {
 
     private static void executeOption(int option) {
         switch (option) {
-            case 1 -> System.out.println(new Builder().buildStudent().toString());
-//            case 2 -> // Supprimer Student
-//            case 3 -> // Print Students
-            case 4 -> System.out.println(new Builder().buildCourse().toString());
-//            case 5 -> // Print Courses
+            case 1 -> new Builder().buildStudent().saveToDatabase(connection);
+            case 2 -> new StudentBroker(connection).delete(askForStudentId());
+            case 3 -> printStudents(new StudentBroker(connection).findAll("SELECT * FROM Student"));
+            case 4 -> new Builder().buildCourse().saveToDatabase(connection);
+            case 5 -> printCourses(new CourseBroker(connection).list());
 //            case 6 -> // Signup student to class
 //            case 7 -> // Add grade to student
 //            case 8 -> // Print Students following class
@@ -70,5 +77,20 @@ public class Main {
 
     private static void printGoodbyeMessage() {
         System.out.println("Au revoir!");
+    }
+
+    private static String askForStudentId() {
+        System.out.print("Entrer l'id de l'étudiant: ");
+        return new Scanner(System.in).nextLine();
+    }
+
+    private static void printStudents(List<Student> list) {
+        for (Student student : list)
+            System.out.println(student);
+    }
+
+    private static void printCourses(List<Course> list) {
+        for (Course course : list)
+            System.out.println(course);
     }
 }

@@ -9,11 +9,11 @@ public class Builder {
         String lastName = askForValue("Nom Famille de l'étudiant");
         String birthDay;
         do {
-            birthDay = askForValue("Date de naissance (DD/MM/YYYY) de l'étudiant");
-            if (!valideBirthDay(birthDay)) {
-                System.out.println("ERREUR: Date de naissance invalide format requis: DD/MM/YYYY");
+            birthDay = askForValue("Date de naissance (YYYY-MM-DD) de l'étudiant");
+            if (!validBirthDay(birthDay)) {
+                System.out.println("ERREUR: Date de naissance invalide format requis: YYYY-MM-DD");
             }
-        }while(!valideBirthDay(birthDay));
+        }while(!validBirthDay(birthDay));
         String studentId = generateStudentId(firstName, lastName, birthDay).toLowerCase();
         return new Student(null, studentId, firstName, lastName, birthDay);
     }
@@ -51,7 +51,7 @@ public class Builder {
         return firstName.substring(0, 2) + lastName.substring(0, 2) + birthDay.substring(7, 9);
     }
 
-    private boolean valideBirthDay(String birthDay) {
-        return birthDay.matches("[0-9]{2}/[0-9]{2}/[0-9]{4}");
+    private boolean validBirthDay(String birthDay) {
+        return birthDay.matches("[0-9]{4}-[0-9]{2}-[0-9]{2}");
     }
 }
