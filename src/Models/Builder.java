@@ -1,5 +1,10 @@
 package Models;
 
+import Brokers.CourseBroker;
+import Brokers.StudentBroker;
+import Brokers.TeacherBroker;
+
+import java.sql.Connection;
 import java.util.Scanner;
 
 public class Builder {
@@ -13,7 +18,7 @@ public class Builder {
             if (!validBirthDay(birthDay)) {
                 System.out.println("ERREUR: Date de naissance invalide format requis: YYYY-MM-DD");
             }
-        }while(!validBirthDay(birthDay));
+        } while (!validBirthDay(birthDay));
         String studentId = generateStudentId(firstName, lastName, birthDay).toLowerCase();
         return new Student(null, studentId, firstName, lastName, birthDay);
     }
@@ -24,6 +29,21 @@ public class Builder {
         int passingGrade = askForValue("Note de passage du cour", 0, 100);
         int credits = askForValue("Nombre de crédits du cours", 1, 10);
         return new Course(null, code, courseName, passingGrade, credits);
+    }
+
+    public StudentCourse buildStudentCourse(Connection connection) {
+        String studentId = askForValue("Code permanent de l'etudiant");
+        String courseCode = askForValue("Code du cours");
+        int year = askForValue("Annee durant laquelle le cours sera donnee", 1950, 2500);
+
+        return new StudentCourse(new StudentBroker(connection).getStudentByStudentId(studentId).getId(), new CourseBroker(connection).getCourseByCode(courseCode).getId(), null, "Inscrit", year);
+    }
+
+    public TeacherCourse buildTeacherCourse(Connection connection) {
+        String teacherId = askForValue("Code permanent du professeur");
+        String courseCode = askForValue("Code du cours");
+
+        return new TeacherCourse(new TeacherBroker(connection).getTeacherByTeacherId(teacherId).getId(), new CourseBroker(connection).getCourseByCode(courseCode).getId());
     }
 
     private String askForValue(String valueName) {

@@ -1,6 +1,5 @@
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.SQLException;
 
 public class Database {
     private static final String DB_DRIVER = "oracle.jdbc.driver.OracleDriver";
@@ -15,19 +14,19 @@ public class Database {
 
     private void connect() {
         Connection conn = null;
-        try{
+        try {
             //Register the JDBC driver
             Class.forName(DB_DRIVER);
 
             //Open the connection
             conn = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
 
-            if(conn != null){
+            if (conn != null) {
                 System.out.println("Successfully connected.");
-            }else{
+            } else {
                 System.out.println("Failed to connect.");
             }
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         connection = conn;

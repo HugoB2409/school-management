@@ -63,13 +63,15 @@ public class CourseBroker {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, courseCode);
             ResultSet resultSet = preparedStatement.executeQuery();
-            course = new Course(
-                    resultSet.getInt("id"),
-                    resultSet.getString("name"),
-                    resultSet.getString("code"),
-                    resultSet.getInt("credit"),
-                    resultSet.getDouble("passingGrade")
-            );
+            while (resultSet.next()) {
+                course = new Course(
+                        resultSet.getInt("id"),
+                        resultSet.getString("name"),
+                        resultSet.getString("code"),
+                        resultSet.getInt("credit"),
+                        resultSet.getDouble("passingGrade")
+                );
+            }
             resultSet.close();
         } catch (SQLException exception) {
             System.out.println(exception);

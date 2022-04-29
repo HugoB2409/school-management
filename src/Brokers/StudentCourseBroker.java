@@ -19,7 +19,7 @@ public class StudentCourseBroker {
     }
 
     public void register(StudentCourse studentCourse) {
-        String query = "INSERT INTO StudentCourse (studentId, courseId, grade, state) VALUES (?, ?, ?, ?)";
+        String query = "INSERT INTO StudentCourse (studentId, courseId, grade, state, year) VALUES (?, ?, ?, ?, ?)";
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -27,6 +27,23 @@ public class StudentCourseBroker {
             preparedStatement.setInt(2, studentCourse.getCourseId());
             preparedStatement.setDouble(3, studentCourse.getGrade());
             preparedStatement.setString(4, studentCourse.getState());
+            preparedStatement.setInt(5, studentCourse.getYear());
+            preparedStatement.executeUpdate();
+        } catch (SQLException exception) {
+            System.out.println(exception);
+        }
+    }
+
+    public void updateGrade(int studentId, Course course, int year, double grade) {
+        String query = "UPDATE StudentCourse SET grade = ?, state = ? WHERE studentId = ? AND courseId = ? AND year = ?";
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setDouble(1, grade);
+            preparedStatement.setString(2, grade >= course.getPassingGrade() ? "Reussi" : "Echoue");
+            preparedStatement.setInt(3, studentId);
+            preparedStatement.setInt(4, course.getId());
+            preparedStatement.setInt(5, year);
             preparedStatement.executeUpdate();
         } catch (SQLException exception) {
             System.out.println(exception);
@@ -61,12 +78,12 @@ public class StudentCourseBroker {
 
     public List<Course> getCourseByStudent(String studentId) {
         List<Course> courses = new ArrayList<>();
-        // get student by id
+        Student student = new StudentBroker(connection).getStudentByStudentId(studentId);
         String query = "SELECT * FROM Course c JOIN StudentCourse sc ON c.id = sc.CourseId WHERE sc.studentId = ?";
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setInt(1, 1);
+            preparedStatement.setInt(1, student.getId());
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 Course course = new Course(

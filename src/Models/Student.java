@@ -42,7 +42,7 @@ public class Student {
 
     @Override
     public String toString() {
-        return  studentId + " " + firstName + " " + lastName + " " + birthDay;
+        return studentId + " " + firstName + " " + lastName + " " + birthDay;
     }
 
     public void saveToDatabase(Connection connection) {

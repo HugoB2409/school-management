@@ -65,4 +65,28 @@ public class StudentBroker {
         }
         return students;
     }
+
+    public Student getStudentByStudentId(String studentId) {
+        Student student = null;
+        String query = "SELECT * FROM Student WHERE studentId = ?";
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, studentId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                student = new Student(
+                        resultSet.getInt("id"),
+                        resultSet.getString("studentId"),
+                        resultSet.getString("firstName"),
+                        resultSet.getString("LastName"),
+                        resultSet.getString("birthDay")
+                );
+            }
+            resultSet.close();
+        } catch (SQLException exception) {
+            System.out.println(exception);
+        }
+        return student;
+    }
 }

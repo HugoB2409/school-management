@@ -5,12 +5,14 @@ public class StudentCourse {
     private final int courseId;
     private final double grade;
     private final String state; // Reussi, en cours, Echoue
+    private final int year;
 
-    public StudentCourse(int studentId, int courseId, double grade, String state) {
+    public StudentCourse(int studentId, int courseId, Double grade, String state, int year) {
         this.studentId = studentId;
         this.courseId = courseId;
-        this.grade = grade;
+        this.grade = (grade == null) ? -1 : grade;
         this.state = state;
+        this.year = year;
     }
 
     public int getStudentId() {
@@ -27,5 +29,9 @@ public class StudentCourse {
 
     public String getState() {
         return state;
+    }
+
+    public int getYear() {
+        return year;
     }
 }
